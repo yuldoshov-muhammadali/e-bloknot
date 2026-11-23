@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual muhit (venv)
+venv/
+.venv/
+env/
+
+# Muhit o'zgaruvchilari (maxfiy ma'lumotlar — hech qachon yuklamang!)
+.env
+
+# Ma'lumotlar bazasi fayllari (lokal SQLite)
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# Muharrir / IDE
+.vscode/
+.idea/
+
+# Operatsion tizim
+.DS_Store
+Thumbs.db

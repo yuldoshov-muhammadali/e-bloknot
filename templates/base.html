@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+  base.html — "asosiy shablon".
+  Barcha sahifalar shu faylga tayanadi: yuqoridagi nomi (header),
+  navigatsiya va xabarlar shu yerda bir marta yoziladi.
+  Har bir sahifa faqat o'zining ichki "content" qismini to'ldiradi.
+-->
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <!-- Telefon ekraniga to'g'ri moslashishi uchun (mobile-first) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSRF token (JavaScript fetch so'rovlarida ishlatiladi) -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{% block title %}E-Bloknot{% endblock %}</title>
+
+    <!-- PWA (telefonga o'rnatish uchun) -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/icon-192.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icons/icon-192.png') }}">
+
+    <!-- CSS fayl ulanishi -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Yuqori qism: dastur nomi va navigatsiya -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="{{ url_for('index') }}" class="logo">E-Bloknot</a>
+            <nav class="nav">
+                {% if current_user.is_authenticated %}
+                    <!-- Faqat tizimga kirgan odam uchun ko'rinadigan havolalar -->
+                    <a href="{{ url_for('index') }}">Bugun</a>
+                    <a href="{{ url_for('report') }}">📊 Hisobot</a>
+                    <a href="{{ url_for('settings') }}">Sozlamalar</a>
+                    <a href="{{ url_for('logout') }}">Chiqish</a>
+                {% else %}
+                    <!-- Kirmagan odam uchun -->
+                    <a href="{{ url_for('login') }}">Kirish</a>
+                    <a href="{{ url_for('register') }}">Ro'yxatdan o'tish</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- Asosiy qism -->
+    <main class="container">
+        <!-- Xabarlar (flash): xato yoki muvaffaqiyat haqida -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Har bir sahifaning o'ziga xos qismi shu yerga joylashadi -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Qisqa xabarlar (toast) shu yerda paydo bo'ladi -->
+    <div id="toast-container"></div>
+
+    <!-- Service worker — telefonga o'rnatish va statik fayllarni keshlash -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker
+                    .register("/sw.js", { scope: "/" })
+                    .catch(function () { /* xatoni jim o'tkazamiz */ });
+            });
+        }
+    </script>
+
+    {% if current_user.is_authenticated %}
+        <!-- Guruhlar ro'yxatini JavaScript uchun uzatamiz (chip tanlash menyusi) -->
+        <script>
+            window.CATEGORIES = {{ all_categories|tojson }};
+        </script>
+        <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% endif %}
+</body>
+</html>

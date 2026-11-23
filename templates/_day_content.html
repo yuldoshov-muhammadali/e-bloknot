@@ -1,0 +1,66 @@
+{#
+  _day_content.html — bitta kun mazmuni (bo'lak / partial).
+  index.html ichida va /fragment orqali ishlatiladi.
+  Kerakli o'zgaruvchilar: kechikkanlar, xulosa, guruhlar, bugun_iso.
+#}
+
+{# --- Kechikkanlar ogohlantirishi (faqat bugun) --- #}
+{% if kechikkanlar %}
+<div class="card overdue-card" id="overdue">
+    <div class="overdue-head">
+        <span class="overdue-title">⚠️ Oldingi kunlardan {{ kechikkanlar|length }} ta vazifa bajarilmay qoldi</span>
+        <button type="button" class="btn-small move-all-btn" data-date="{{ bugun_iso }}">Hammasini bugunga ko'chirish</button>
+    </div>
+    <ul class="overdue-list">
+        {% for k in kechikkanlar %}
+        <li class="overdue-item" data-id="{{ k.id }}">
+            <div class="overdue-info">
+                <span class="task-title">{{ k.emoji }} {{ k.title }}</span>
+                <span class="muted-small">{{ k.days_ago }} kun oldin</span>
+            </div>
+            <div class="overdue-actions">
+                <button type="button" class="btn-small move-today-btn" data-date="{{ bugun_iso }}">Bugunga ko'chirish</button>
+                <button type="button" class="btn-small danger-btn drop-btn">Voz kechish</button>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{# --- Kun xulosasi --- #}
+{% if xulosa.jami > 0 %}
+<div class="card summary-card">
+    <div class="summary-top">
+        <strong>{{ xulosa.bajarildi }} / {{ xulosa.jami }} bajarildi · {{ xulosa.foiz }}%</strong>
+        {% if xulosa.yakunlandi %}<span class="congrats">Kun yakunlandi! 👏</span>{% endif %}
+    </div>
+    <div class="progress"><div class="progress-fill" style="width: {{ xulosa.foiz }}%"></div></div>
+    <div class="summary-stats">
+        <span>❌ {{ xulosa.bajarilmadi }} bajarilmadi</span>
+        <span>⏱ {{ xulosa.vaqt_matni }}</span>
+    </div>
+</div>
+{% endif %}
+
+{# --- Vazifalar guruhlar bo'yicha --- #}
+{% if guruhlar %}
+    {% for guruh in guruhlar %}
+        <div class="card group-card">
+            <h2 class="group-title">
+                {{ guruh.emoji }} {{ guruh.name }}
+                <span class="group-count">{{ guruh.done }}/{{ guruh.total }}</span>
+            </h2>
+            <ul class="task-list">
+                {% for task in guruh.tasks %}
+                    {% include "_task.html" %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="card placeholder empty-state">
+        <p class="empty-emoji">📝</p>
+        <p>Bu kunda hali vazifa yo'q. Rejangizni yozing!</p>
+    </div>
+{% endif %}

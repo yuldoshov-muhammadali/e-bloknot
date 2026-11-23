@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Kirish — E-Bloknot{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Tizimga kirish</h1>
+    <p class="subtitle">Login va parolingizni kiriting.</p>
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="username">Login</label>
+        <input type="text" id="username" name="username" placeholder="alivaliyev">
+
+        <label for="password">Parol</label>
+        <input type="password" id="password" name="password" placeholder="Parolingiz">
+
+        <button type="submit" class="btn">Kirish</button>
+    </form>
+
+    <p class="form-footer">
+        Hisobingiz yo'qmi? <a href="{{ url_for('register') }}">Ro'yxatdan o'tish</a>
+    </p>
+</div>
+
+<!-- Telefonga o'rnatish ko'rsatmasi (PWA) -->
+<div class="card install-hint">
+    📱 <strong>Telefoningizga o'rnating:</strong> brauzer menyusi →
+    "Bosh ekranga qo'shish" (Add to Home Screen).
+</div>
+{% endblock %}

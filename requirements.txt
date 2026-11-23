@@ -1,0 +1,17 @@
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy>=2.0,<2.1
+Flask-Login==0.6.3
+Flask-WTF==1.2.1
+Flask-Migrate==4.0.7
+python-dotenv==1.0.1
+Werkzeug==3.0.3
+# Windows'da vaqt zonasi (Asia/Tashkent) ma'lumotlari uchun
+tzdata==2024.1
+
+# Production (Railway) uchun
+gunicorn==22.0.0
+psycopg2-binary==2.9.9
+
+# Testlar uchun (ixtiyoriy, faqat dasturchi uchun)
+pytest==8.3.2

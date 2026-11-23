@@ -1,0 +1,1007 @@
+/*
+  style.css — E-Bloknot dizayni.
+  Avvalo telefon uchun (mobile-first), kompyuterda ham chiroyli ko'rinadi.
+  Asosiy rang: binafsha-ko'k (indigo).
+*/
+
+/* --- Umumiy sozlamalar va ranglar --- */
+:root {
+    --asosiy: #4f46e5;        /* asosiy rang (indigo) */
+    --asosiy-quyuq: #4338ca;  /* bosilganda to'qroq rang */
+    --fon: #f4f5fb;           /* sahifa foni */
+    --karta: #ffffff;         /* kartochka foni */
+    --matn: #1f2430;          /* asosiy matn rangi */
+    --xira: #6b7280;          /* xira (kulrang) matn */
+    --chegara: #e5e7eb;       /* nozik chiziqlar */
+    --radius: 16px;           /* burchaklar yumaloqligi */
+}
+
+/* Barcha elementlar uchun qulay o'lcham hisobi */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: var(--fon);
+    color: var(--matn);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+/* --- Yuqori qism (header) --- */
+.header {
+    background-color: var(--karta);
+    border-bottom: 1px solid var(--chegara);
+    position: sticky;  /* aylantirsa ham yuqorida qoladi */
+    top: 0;
+    z-index: 10;
+}
+
+.header-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--asosiy);
+    text-decoration: none;
+}
+
+.nav a {
+    color: var(--matn);
+    text-decoration: none;
+    font-size: 15px;
+    margin-left: 16px;
+}
+
+.nav a:hover {
+    color: var(--asosiy);
+}
+
+/* --- Asosiy qism --- */
+.container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px 18px 40px;
+}
+
+/* --- Kartochkalar --- */
+.card {
+    background-color: var(--karta);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.card h1 {
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: var(--xira);
+    font-size: 15px;
+}
+
+.muted {
+    color: var(--xira);
+    font-size: 14px;
+}
+
+/* Vazifalar uchun bo'sh (placeholder) kartochka — nozik ko'rinishda */
+.placeholder {
+    border: 1px dashed var(--chegara);
+    box-shadow: none;
+}
+
+/* --- Formalar --- */
+form {
+    margin-top: 18px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;  /* 16px — telefonda avtomatik kattalashishni oldini oladi */
+    border: 1px solid var(--chegara);
+    border-radius: 10px;
+    background-color: #fff;
+    color: var(--matn);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--asosiy);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* --- Tugma --- */
+.btn {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--asosiy);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--asosiy-quyuq);
+}
+
+/* --- Forma ostidagi havola matni --- */
+.form-footer {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--xira);
+}
+
+.form-footer a {
+    color: var(--asosiy);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* --- Xabarlar (flash) --- */
+.flash {
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+
+/* Xato xabari — qizil */
+.flash-error {
+    background-color: #fde8e8;
+    color: #9b1c1c;
+    border: 1px solid #f8b4b4;
+}
+
+/* Muvaffaqiyat xabari — yashil */
+.flash-success {
+    background-color: #def7ec;
+    color: #03543f;
+    border: 1px solid #84e1bc;
+}
+
+/* --- Matn maydoni (textarea) --- */
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 1px solid var(--chegara);
+    border-radius: 10px;
+    background-color: #fff;
+    color: var(--matn);
+    resize: vertical;  /* faqat balandligini o'zgartirish mumkin */
+    margin-top: 12px;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--asosiy);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* --- Statistika qatori --- */
+.stat {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--xira);
+    margin: 4px 4px 14px;
+}
+
+/* --- Guruh kartochkasi --- */
+.group-card {
+    padding: 18px 20px;
+}
+
+.group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+/* Guruhdagi vazifalar soni — kichik yumaloq nishon */
+.group-count {
+    margin-left: auto;  /* o'ng chetga suradi */
+    background-color: var(--fon);
+    color: var(--xira);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 999px;
+}
+
+/* --- Vazifalar ro'yxati --- */
+.task-list {
+    list-style: none;  /* nuqtalarni olib tashlaymiz */
+}
+
+.task-item {
+    padding: 10px 12px;
+    background-color: var(--fon);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    /* Endi kartochkada bir nechta qator bor — ustun tartibida */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid transparent;
+}
+
+.task-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Matn (chapda) + amallar (o'ngda) qatori */
+.task-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.task-title {
+    flex: 1 1 auto;
+    min-width: 120px;
+    word-break: break-word;
+}
+
+/* --- Belgilangan vazifa ko'rinishi --- */
+.task-item.status-done {
+    background-color: #e9f8ef;
+    border-color: #b7e4c7;
+}
+.task-item.status-done .task-title {
+    text-decoration: line-through;
+    color: var(--xira);
+}
+.task-item.status-failed {
+    background-color: #fdeeee;
+    border-color: #f5c2c2;
+}
+
+/* Bajarolmaslik sababi / ko'chirish belgisi */
+.reason-badge {
+    font-size: 13px;
+    color: #9b1c1c;
+}
+.moved-badge {
+    font-size: 12px;
+    color: var(--xira);
+}
+.moved-badge.danger {
+    color: #c81e1e;
+    font-weight: 600;
+}
+
+/* --- Belgilash tugmalari --- */
+.task-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.mark-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.done-btn, .fail-btn, .undo-btn {
+    min-height: 44px;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--chegara);
+    border-radius: 10px;
+    background-color: #fff;
+    cursor: pointer;
+}
+.done-btn { color: #0f7b3f; border-color: #b7e4c7; }
+.done-btn:hover { background-color: #e9f8ef; }
+.fail-btn { color: #c81e1e; border-color: #f5c2c2; }
+.fail-btn:hover { background-color: #fdeeee; }
+.undo-btn { color: var(--xira); }
+.undo-btn:hover { background-color: #eef0f3; }
+
+/* --- Vaqt (taymer) --- */
+.time-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.timer-btn {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 15px;
+    background-color: #fff;
+    border: 1px solid var(--chegara);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.timer-btn:hover { background-color: #eef0fe; }
+.minutes-display {
+    font-size: 13px;
+    color: var(--xira);
+    cursor: pointer;
+    white-space: nowrap;
+}
+.minutes-display:hover { color: var(--asosiy); }
+.timer-live {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: var(--asosiy);
+    font-size: 14px;
+}
+.minutes-input {
+    width: 70px;
+    padding: 6px 8px;
+    font-size: 14px;
+    border: 1px solid var(--asosiy);
+    border-radius: 8px;
+}
+
+/* --- Sabab maydoni --- */
+.reason-box {
+    background-color: #fff;
+    border: 1px solid var(--chegara);
+    border-radius: 10px;
+    padding: 12px;
+}
+.reason-label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.reason-quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+.reason-pick {
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: 1px solid var(--chegara);
+    border-radius: 999px;
+    background-color: var(--fon);
+    cursor: pointer;
+}
+.reason-pick:hover { background-color: #eef0fe; }
+.reason-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid var(--chegara);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+/* --- Kichik tugma (ko'chirish va h.k.) --- */
+.btn-small {
+    min-height: 40px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--asosiy);
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+.btn-small:hover { background-color: var(--asosiy-quyuq); }
+.danger-btn {
+    background-color: #fff;
+    color: #c81e1e;
+    border: 1px solid #f5c2c2;
+}
+.danger-btn:hover { background-color: #fdeeee; }
+
+/* Vazifa o'ng tomonidagi tugmalar guruhi */
+.task-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;  /* menyu shu joyga nisbatan ochiladi */
+    flex-shrink: 0;
+}
+
+/* --- Guruh belgisi (chip) --- */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--asosiy);
+    background-color: #eef0fe;
+    border: 1px solid #dcdffb;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.chip:hover {
+    background-color: #e3e6fd;
+}
+
+/* --- "⋯" menyu tugmasi --- */
+.menu-btn {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--xira);
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background-color: #e9eaf1;
+}
+
+/* --- Menyu ("Tahrirlash" / "O'chirish") --- */
+.menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 20;
+    background-color: #fff;
+    border: 1px solid var(--chegara);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    min-width: 150px;
+}
+
+.menu-dropdown button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    min-height: 44px;
+    font-size: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--matn);
+}
+
+.menu-dropdown button:hover {
+    background-color: var(--fon);
+}
+
+.menu-dropdown .delete-btn {
+    color: #c81e1e;  /* o'chirish — qizil */
+}
+
+/* --- Joyida tahrirlash inputi --- */
+.edit-input {
+    flex: 1 1 auto;
+    min-width: 120px;
+    padding: 8px 10px;
+    font-size: 15px;
+    border: 1px solid var(--asosiy);
+    border-radius: 8px;
+}
+
+.edit-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* --- O'rgatilgan so'z (Sozlamalar) --- */
+.kw-hits {
+    display: block;
+    font-size: 12px;
+    color: var(--xira);
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+.kw-delete-btn {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 16px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.kw-delete-btn:hover {
+    background-color: #fde8e8;
+}
+
+/* --- Guruh tanlash paneli (picker / bottom sheet) --- */
+.picker-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: flex-end;  /* telefonda pastdan chiqadi */
+    justify-content: center;
+    z-index: 100;
+}
+
+.picker-overlay[hidden] {
+    display: none;
+}
+
+.picker-sheet {
+    background-color: #fff;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 18px 18px 0 0;
+    padding: 18px 16px 24px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.picker-title {
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.picker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.picker-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    font-size: 15px;
+    text-align: left;
+    background-color: var(--fon);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.picker-option:hover {
+    background-color: #eef0fe;
+}
+
+/* Hozirgi (tanlangan) guruh belgilanadi */
+.picker-option.selected {
+    background-color: #eef0fe;
+    border-color: var(--asosiy);
+    font-weight: 600;
+    color: var(--asosiy);
+}
+
+/* Panel ochilganda orqa fon aylanmasin */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* --- Toast (pastdagi qisqa xabar) --- */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 200;
+    pointer-events: none;
+}
+
+.toast {
+    background-color: #1f2430;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    max-width: 90%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-error {
+    background-color: #9b1c1c;
+}
+
+/* On desktop, desktop joyida chiqsin, pastdan emas */
+@media (min-width: 700px) {
+    .picker-overlay {
+        align-items: center;
+    }
+    .picker-sheet {
+        border-radius: 18px;
+    }
+}
+
+/* --- Bo'sh holat --- */
+.empty-state {
+    text-align: center;
+    color: var(--xira);
+    padding: 36px 20px;
+}
+
+.empty-emoji {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+/* --- Kunlar bo'yicha yurish --- */
+.day-nav-card {
+    padding: 14px 16px;
+    text-align: center;
+}
+.day-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.day-arrow {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    text-decoration: none;
+    color: var(--asosiy);
+    background-color: var(--fon);
+    border-radius: 10px;
+}
+.day-arrow:hover { background-color: #eef0fe; }
+.day-label {
+    font-weight: 700;
+    font-size: 16px;
+}
+.today-btn {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--asosiy);
+    text-decoration: none;
+}
+
+/* --- Kechikkanlar ogohlantirishi --- */
+.overdue-card {
+    background-color: #fff8e6;
+    border: 1px solid #f5e0a3;
+}
+.overdue-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.overdue-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #8a6d1a;
+}
+.overdue-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.overdue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.overdue-info {
+    display: flex;
+    flex-direction: column;
+}
+.muted-small {
+    font-size: 12px;
+    color: var(--xira);
+}
+.overdue-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* --- Kun xulosasi --- */
+.summary-card {
+    padding: 16px 18px;
+}
+.summary-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.congrats {
+    color: #0f7b3f;
+    font-weight: 700;
+}
+.progress {
+    height: 10px;
+    background-color: var(--fon);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.progress-fill {
+    height: 100%;
+    background-color: var(--asosiy);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+.summary-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--xira);
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   HISOBOT SAHIFASI
+   ========================================================= */
+
+/* Davr turi almashtirgich [Hafta][Oy] */
+.report-head { padding: 14px 16px; }
+.segmented {
+    display: flex;
+    background-color: var(--fon);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 12px;
+}
+.seg {
+    flex: 1;
+    text-align: center;
+    padding: 9px;
+    min-height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--xira);
+    border-radius: 8px;
+}
+.seg.active {
+    background-color: #fff;
+    color: var(--asosiy);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+.period-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.period-label { font-weight: 700; font-size: 15px; }
+.day-arrow.disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* Qisqa xulosa */
+.summary-text-card { background-color: #eef0fe; }
+.summary-line { font-size: 14px; margin-bottom: 4px; }
+.summary-line:last-child { margin-bottom: 0; }
+
+/* KPI kartochkalar (2×2) */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.kpi { padding: 16px; margin-bottom: 0; }
+.kpi-num { font-size: 20px; font-weight: 700; }
+.kpi-sub { font-size: 14px; color: var(--xira); font-weight: 600; }
+.kpi-label { font-size: 13px; color: var(--xira); margin-top: 2px; }
+.kpi-delta { font-size: 12px; margin-top: 6px; font-weight: 600; }
+.kpi-delta.up { color: #0f7b3f; }
+.kpi-delta.down { color: #c81e1e; }
+.kpi-delta.neutral { color: var(--xira); }
+
+.report-section-title { font-size: 16px; margin-bottom: 14px; }
+
+/* Kunlar grafigi */
+.chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 140px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+.chart-col {
+    flex: 1 0 auto;
+    min-width: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.bar {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    background-color: var(--fon);
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
+}
+.bar-fill {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    min-height: 2px;
+    transition: height 0.3s ease;
+}
+.bar-fill.green { background-color: #34a853; }
+.bar-fill.yellow { background-color: #f4b400; }
+.bar-fill.red { background-color: #ea4335; }
+.bar-fill.grey { background-color: #d2d6dc; }
+.bar-label { font-size: 11px; color: var(--xira); margin-top: 4px; }
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--xira);
+}
+.dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+.dot.green { background-color: #34a853; }
+.dot.yellow { background-color: #f4b400; }
+.dot.red { background-color: #ea4335; }
+.dot.grey { background-color: #d2d6dc; }
+
+/* Vaqtim qayerga ketyapti */
+.time-row { margin-bottom: 14px; }
+.time-row:last-child { margin-bottom: 0; }
+.time-row-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.time-name { font-weight: 600; }
+.time-val { color: var(--xira); white-space: nowrap; }
+.time-bar {
+    height: 10px;
+    background-color: var(--fon);
+    border-radius: 999px;
+    overflow: hidden;
+}
+.time-bar-fill {
+    height: 100%;
+    background-color: var(--asosiy);
+    border-radius: 999px;
+}
+.time-sub { font-size: 12px; color: var(--xira); margin-top: 3px; }
+
+/* Uzoq kutayotganlar */
+.pending-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.pending-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    background-color: var(--fon);
+    border-radius: 10px;
+    border-left: 4px solid var(--chegara);
+}
+.pending-item.danger { border-left-color: #ea4335; }
+.pending-info { display: flex; flex-direction: column; }
+.pending-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.tip {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #8a6d1a;
+    background-color: #fff8e6;
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+
+/* Nega bajarolmayapman */
+.reason-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.reason-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background-color: var(--fon);
+    border-radius: 10px;
+    font-size: 14px;
+}
+.reason-count { color: var(--xira); font-weight: 600; }
+
+/* Telefonga o'rnatish ko'rsatmasi (login sahifasida) */
+.install-hint {
+    background-color: #eef0fe;
+    font-size: 13px;
+    color: var(--matn);
+    padding: 14px 16px;
+}
+
+/* --- Kompyuter (katta ekran) uchun kichik moslashuv --- */
+@media (min-width: 700px) {
+    .container {
+        padding-top: 32px;
+    }
+    .card {
+        padding: 28px;
+    }
+    .kpi-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

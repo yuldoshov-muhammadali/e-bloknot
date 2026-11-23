@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ kun_sarlavha }} — E-Bloknot{% endblock %}
+
+{% block content %}
+<!-- Kunlar bo'yicha yurish: ◀ sana ▶ va "Bugun" tugmasi -->
+<div class="card day-nav-card">
+    <div class="day-nav">
+        <a class="day-arrow" href="{{ url_for('index', date=oldingi_iso) }}" aria-label="Oldingi kun">◀</a>
+        <div class="day-label">{{ kun_sarlavha }}</div>
+        <a class="day-arrow" href="{{ url_for('index', date=keyingi_iso) }}" aria-label="Keyingi kun">▶</a>
+    </div>
+    {% if not bugunmi %}
+        <a class="today-btn" href="{{ url_for('index') }}">Bugunga qaytish</a>
+    {% endif %}
+</div>
+
+<!-- Vazifa qo'shish (tanlangan kunga yoziladi) -->
+<div class="card">
+    <h2>{% if bugunmi %}Bugungi rejangiz{% else %}Shu kun uchun reja{% endif %}</h2>
+    <form method="POST" action="{{ url_for('index', date=tanlangan_iso) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <textarea
+            name="kunlik_matn"
+            rows="3"
+            placeholder="Nima qilmoqchisiz? Har birini vergul yoki yangi qatordan yozing..."></textarea>
+        <button type="submit" class="btn">Qo'shish</button>
+    </form>
+</div>
+
+<!--
+  Kun mazmuni (xulosa, kechikkanlar, vazifalar) shu konteynerda.
+  Belgilash / taymer / ko'chirishdan keyin JavaScript shu joyni
+  /fragment orqali qayta chizadi (sahifa qayta yuklanmaydi).
+  data-date — tanlangan kun (JavaScript qaysi kunni yangilashni biladi).
+-->
+<div id="day-content" data-date="{{ tanlangan_iso }}">
+    {% include "_day_content.html" %}
+</div>
+{% endblock %}

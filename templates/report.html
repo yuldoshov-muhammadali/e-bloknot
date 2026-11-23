@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}Hisobot — E-Bloknot{% endblock %}
+
+{% set davr_soz = 'hafta' if period == 'week' else 'oy' %}
+
+{% block content %}
+<!-- Davr turi: [Hafta] [Oy] -->
+<div class="card report-head">
+    <div class="segmented">
+        <a href="{{ url_for('report', period='week') }}"
+           class="seg {% if period == 'week' %}active{% endif %}">Hafta</a>
+        <a href="{{ url_for('report', period='month') }}"
+           class="seg {% if period == 'month' %}active{% endif %}">Oy</a>
+    </div>
+    <div class="period-nav">
+        <a class="day-arrow" href="{{ url_for('report', period=period, date=oldingi_ref) }}" aria-label="Oldingi davr">◀</a>
+        <div class="period-label">{{ sarlavha }}</div>
+        {% if keyingi_mumkin %}
+            <a class="day-arrow" href="{{ url_for('report', period=period, date=keyingi_ref) }}" aria-label="Keyingi davr">▶</a>
+        {% else %}
+            <span class="day-arrow disabled" aria-hidden="true">▶</span>
+        {% endif %}
+    </div>
+</div>
+
+{% if joriy.jami > 0 %}
+
+    <!-- f) Qisqa xulosa -->
+    {% if xulosa %}
+    <div class="card summary-text-card">
+        {% for jumla in xulosa %}
+            <p class="summary-line">{{ jumla }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- a) Asosiy kartochkalar (2×2) -->
+    <div class="kpi-grid">
+        <div class="card kpi">
+            <div class="kpi-num">{{ joriy.jami }}</div>
+            <div class="kpi-label">Jami vazifalar</div>
+        </div>
+        <div class="card kpi">
+            <div class="kpi-num">
+                ✅ {{ joriy.bajarildi }}
+                <span class="kpi-sub">{% if joriy.foiz is not none %}{{ joriy.foiz }}%{% else %}—{% endif %}</span>
+            </div>
+            <div class="kpi-label">Bajarildi</div>
+            {% if taqqos %}
+            <div class="kpi-delta {% if taqqos.yaxshi %}up{% else %}down{% endif %}">
+                {% if taqqos.yaxshi %}↑{% else %}↓{% endif %} {{ taqqos.delta|abs }}% o'tgan {{ davr_soz }}ga nisbatan
+            </div>
+            {% endif %}
+        </div>
+        <div class="card kpi">
+            <div class="kpi-num">❌ {{ joriy.bajarilmadi }}</div>
+            <div class="kpi-label">Bajarilmadi</div>
+        </div>
+        <div class="card kpi">
+            <div class="kpi-num">⏱ {{ joriy.vaqt_matni }}</div>
+            <div class="kpi-label">Jami vaqt</div>
+            {% if vaqt_delta_matni %}
+            <div class="kpi-delta neutral">
+                {% if vaqt_delta > 0 %}↑{% else %}↓{% endif %} {{ vaqt_delta_matni }} o'tgan {{ davr_soz }}dan
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- b) Kunlar bo'yicha grafik -->
+    <div class="card">
+        <h2 class="report-section-title">Kunlar bo'yicha</h2>
+        <div class="chart">
+            {% for k in grafik %}
+            <div class="chart-col" title="{{ k.hafta_kuni }}: {{ k.bajarildi }}/{{ k.jami }} · {{ k.vaqt_matni }}">
+                <div class="bar">
+                    <div class="bar-fill {{ k.rang }}" style="height: {{ k.balandlik }}%;"></div>
+                </div>
+                <div class="bar-label">{{ k.kun_raqami }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="chart-legend">
+            <span><i class="dot green"></i>≥80%</span>
+            <span><i class="dot yellow"></i>50–79%</span>
+            <span><i class="dot red"></i>&lt;50%</span>
+            <span><i class="dot grey"></i>vazifa yo'q</span>
+        </div>
+    </div>
+
+    <!-- c) Vaqtim qayerga ketyapti -->
+    <div class="card">
+        <h2 class="report-section-title">Vaqtim qayerga ketyapti?</h2>
+        {% if vaqt_qatorlar %}
+            {% for r in vaqt_qatorlar %}
+            <div class="time-row">
+                <div class="time-row-top">
+                    <span class="time-name">{{ r.emoji }} {{ r.name }}</span>
+                    <span class="time-val">{{ r.vaqt_matni }} · {{ r.ulush }}%</span>
+                </div>
+                <div class="time-bar"><div class="time-bar-fill" style="width: {{ r.ulush }}%;"></div></div>
+                <div class="time-sub">{{ r.vazifa_soni }} ta vazifa · {% if r.bajarilish_foizi is not none %}{{ r.bajarilish_foizi }}% bajarildi{% else %}—{% endif %}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="muted">Bu davrda vaqt yozilmagan. Taymerdan foydalaning ⏱</p>
+        {% endif %}
+    </div>
+
+{% else %}
+    <!-- Bo'sh holat -->
+    <div class="card placeholder empty-state">
+        <p class="empty-emoji">📊</p>
+        <p>Bu davrda vazifa yo'q.</p>
+        <p><a href="{{ url_for('index') }}">Bugun sahifasiga o'tish →</a></p>
+    </div>
+{% endif %}
+
+<!-- d) Uzoq vaqtdan beri bajarilmayotganlar (hozirgi holat) -->
+<div class="card" id="report">
+    <h2 class="report-section-title">Uzoq vaqtdan beri bajarilmayotganlar</h2>
+    {% if kutayotganlar %}
+        <ul class="pending-list">
+            {% for p in kutayotganlar %}
+            <li class="pending-item {% if p.qizil %}danger{% endif %}" data-id="{{ p.id }}">
+                <div class="pending-info">
+                    <span class="task-title">{{ p.emoji }} {{ p.title }}</span>
+                    <span class="muted-small">
+                        {{ p.kun_otdi }} kundan beri
+                        {% if p.moved_count > 0 %}· {{ p.moved_count }} marta ko'chirildi{% endif %}
+                        {% if p.sabab %}· “{{ p.sabab }}”{% endif %}
+                    </span>
+                </div>
+                <div class="pending-actions">
+                    {% if not p.bugunmi %}
+                        <button type="button" class="btn-small report-move-btn" data-date="{{ bugun_iso }}">Bugunga ko'chirish</button>
+                    {% endif %}
+                    <button type="button" class="btn-small danger-btn report-drop-btn">Voz kechish</button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <p class="tip">💡 Katta vazifani mayda qadamlarga bo'ling yoki ertaga birinchi navbatda bajaring 🐸</p>
+    {% else %}
+        <p class="muted">Zo'r! Uzoq vaqtdan beri osilib qolgan vazifa yo'q 👏</p>
+    {% endif %}
+</div>
+
+{% if joriy.jami > 0 %}
+<!-- e) Nega bajarolmayapman -->
+<div class="card">
+    <h2 class="report-section-title">Nega bajarolmayapman?</h2>
+    {% if sabab_qatorlar %}
+        <ul class="reason-list">
+            {% for s in sabab_qatorlar %}
+            <li class="reason-row"><span>{{ s.sabab }}</span><span class="reason-count">{{ s.soni }} marta</span></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="muted">Bu davrda bajarolmagan (sababli) vazifalar yo'q.</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

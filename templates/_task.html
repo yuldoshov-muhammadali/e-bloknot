@@ -1,0 +1,64 @@
+{#
+  _task.html — bitta vazifa kartochkasi.
+  O'zgaruvchilar: task (lug'at), guruh (emoji, name), ertaga_iso.
+#}
+<li class="task-item status-{{ task.status }}"
+    data-id="{{ task.id }}"
+    data-category="{{ task.category }}"
+    data-status="{{ task.status }}"
+    data-minutes="{{ task.minutes }}">
+
+    <div class="task-row">
+        <span class="task-title">{{ task.title }}</span>
+        <div class="task-actions">
+            <button class="chip" type="button">{{ guruh.emoji }} {{ guruh.name }}</button>
+            <button class="menu-btn" type="button" aria-label="Amallar">⋯</button>
+            <div class="menu-dropdown" hidden>
+                <button class="edit-btn" type="button">Tahrirlash</button>
+                <button class="move-tomorrow-btn" type="button" data-date="{{ ertaga_iso }}">Ertaga ko'chirish</button>
+                <button class="delete-btn" type="button">O'chirish</button>
+            </div>
+        </div>
+    </div>
+
+    {# Ko'chirilgan bo'lsa — kichik belgi (3+ marta bo'lsa qizil) #}
+    {% if task.moved_count > 0 %}
+    <div class="moved-badge {% if task.moved_count >= 3 %}danger{% endif %}">
+        ↪ {{ task.moved_count }}-marta ko'chirildi · {{ task.days_since }} kundan beri
+    </div>
+    {% endif %}
+
+    {# Bajarolmagan sababi #}
+    {% if task.status == 'failed' and task.reason %}
+    <div class="reason-badge">❌ {{ task.reason }}</div>
+    {% endif %}
+
+    <div class="task-controls">
+        <div class="mark-buttons">
+            {% if task.status == 'todo' %}
+                <button class="done-btn" type="button">✅ Bajarildi</button>
+                <button class="fail-btn" type="button">❌ Bajarolmadim</button>
+            {% else %}
+                <button class="undo-btn" type="button">↩ Bekor qilish</button>
+            {% endif %}
+        </div>
+        <div class="time-box">
+            <button class="timer-btn" type="button" aria-label="Taymer">▶</button>
+            <span class="minutes-display" title="Bosib qo'lda kiriting">⏱ <span class="minutes-val">{{ task.minutes }}</span> daq</span>
+            <span class="timer-live" hidden>00:00</span>
+        </div>
+    </div>
+
+    {# "Bajarolmadim" bosilganda ochiladigan sabab maydoni #}
+    <div class="reason-box" hidden>
+        <p class="reason-label">Nega? (ixtiyoriy)</p>
+        <div class="reason-quick">
+            <button type="button" class="reason-pick">Vaqt yetmadi</button>
+            <button type="button" class="reason-pick">Dangasalik qildim</button>
+            <button type="button" class="reason-pick">Chalg'idim (telefon)</button>
+            <button type="button" class="reason-pick">Kutilmagan ish chiqdi</button>
+        </div>
+        <input type="text" class="reason-input" placeholder="O'z sababingizni yozing...">
+        <button type="button" class="reason-save btn-small">Saqlash</button>
+    </div>
+</li>

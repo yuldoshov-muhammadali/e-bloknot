@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Sozlamalar — E-Bloknot{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>O'rgangan so'zlarim</h1>
+    <p class="subtitle">
+        Vazifa guruhini o'zgartirsangiz, platforma so'zlarni shu yerga eslab
+        qoladi va keyingi safar o'zi to'g'ri guruhga qo'yadi.
+    </p>
+</div>
+
+<div id="keywords">
+    {% if sozlar %}
+        <div class="card">
+            <ul class="task-list">
+                {% for s in sozlar %}
+                    <li class="task-item keyword-item" data-id="{{ s.id }}" data-category="{{ s.category }}">
+                        <span class="task-title">
+                            {{ s.word }}
+                            <span class="kw-hits">{{ s.hits }} marta tasdiqlangan</span>
+                        </span>
+                        <div class="task-actions">
+                            <button class="chip" type="button">{{ s.emoji }} {{ s.name }}</button>
+                            <button class="kw-delete-btn" type="button" aria-label="O'chirish">🗑</button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="card placeholder empty-state">
+            <p class="empty-emoji">🧠</p>
+            <p>Hali hech narsa o'rganilmagan. Vazifa guruhini o'zgartirsangiz, platforma eslab qoladi.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
