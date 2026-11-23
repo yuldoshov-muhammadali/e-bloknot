@@ -221,6 +221,19 @@ def inject_categories():
     return {"all_categories": GURUHLAR_PUBLIC}
 
 
+# Jadvallar mavjudligini ta'minlash (ayniqsa internetga birinchi joylaganda).
+# Birinchi so'rovda bir marta ishlaydi: yo'q jadvallarni yaratadi (bori tegilmaydi).
+_jadvallar_tayyor = False
+
+
+@app.before_request
+def _jadvallarni_tayyorla():
+    global _jadvallar_tayyor
+    if not _jadvallar_tayyor:
+        db.create_all()
+        _jadvallar_tayyor = True
+
+
 # =========================================================
 #   LOGIN HIMOYASI (oddiy, xotiradagi rate limit)
 # =========================================================
